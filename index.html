@@ -2,24 +2,114 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Entrée protégée</title>
+  <title>Code promo validé !</title>
   <style>
-    body { font-family: Arial, sans-serif; text-align: center; margin-top: 100px; }
-    #secret { display: none; }
-    input[type=password] { padding: 8px; font-size: 1em; }
-    button { padding: 8px 16px; font-size: 1em; }
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 100px;
+      background: #FFE5B4; /* orange pastel */
+      transition: background 0.3s;
+    }
+    #secret, #secret2 {
+      display: none;
+    }
+    #secret2 {
+      background-color: #2B15A0; /* bleu demandé */
+      min-height: 100vh;
+      padding: 40px 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      z-index: 10;
+      color: white;
+    }
+    .message-container {
+      display: inline-block;
+      text-align: left;
+      max-width: 480px;
+      width: 90%;
+    }
+    .message {
+      font-size: 1.5em;
+      color: #333;
+      margin-top: 40px;
+      line-height: 1.5;
+      text-align: center;
+    }
+    .gif-container {
+      margin-top: 30px;
+      text-align: center;
+    }
+    .custom-gif {
+      width: 100%;
+      max-width: 480px;
+      display: block;
+      margin: 0 auto;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    .second-code-container {
+      margin-top: 40px;
+      text-align: center;
+    }
+    .second-gif {
+      width: 33%;
+      max-width: 160px;
+      min-width: 80px;
+      display: block;
+      margin: 40px auto 0 auto;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    @media (max-width: 500px) {
+      .message-container, .custom-gif {
+        max-width: 98vw;
+      }
+      .second-gif {
+        width: 50vw;
+        max-width: 160px;
+      }
+      #secret2 {
+        padding: 10px 0;
+      }
+    }
   </style>
 </head>
 <body>
+  <!-- Première étape : code promo -->
   <div id="login">
     <h2>Code promo requis</h2>
     <input type="password" id="pwd" placeholder="Code promo">
     <button onclick="checkPassword()">Entrer</button>
     <p id="error" style="color:red;"></p>
   </div>
+
+  <!-- Après code promo : message + premier GIF + deuxième case code -->
   <div id="secret">
-    <h1>On va prendre un verre ?</h1>
+    <div class="message-container">
+      <div class="message">
+        Tu as été assez persévérante pour arriver jusqu’ici…<br>
+        On se revoit bientôt ?
+      </div>
+      <div class="gif-container">
+        <img src="https://i.imgur.com/8bjWjOO.gif" alt="GIF" class="custom-gif">
+      </div>
+      <div class="second-code-container">
+        <label for="second-code" style="font-size:1.2em;">?</label>
+        <input type="password" id="second-code" placeholder="?">
+        <button onclick="checkSecondCode()">Entrer</button>
+        <p id="error2" style="color:red;"></p>
+      </div>
+    </div>
   </div>
+
+  <!-- Après deuxième code : seulement le second GIF sur fond bleu -->
+  <div id="secret2">
+    <img src="https://i.imgur.com/zWBaV8e.gif" alt="GIF secret" class="second-gif">
+  </div>
+
   <script>
     function checkPassword() {
       const password = document.getElementById('pwd').value;
@@ -28,6 +118,17 @@
         document.getElementById('secret').style.display = 'block';
       } else {
         document.getElementById('error').textContent = "Code promo incorrect.";
+      }
+    }
+
+    function checkSecondCode() {
+      const code = document.getElementById('second-code').value;
+      if (code === '++') {
+        document.getElementById('secret').style.display = 'none';
+        document.getElementById('secret2').style.display = 'block';
+        document.body.style.background = '#2B15A0';
+      } else {
+        document.getElementById('error2').textContent = "Code incorrect.";
       }
     }
   </script>
