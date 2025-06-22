@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Entrée protégée</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; margin-top: 100px; }
+    #secret { display: none; }
+    input[type=password] { padding: 8px; font-size: 1em; }
+    button { padding: 8px 16px; font-size: 1em; }
+  </style>
+</head>
+<body>
+  <div id="login">
+    <h2>Code promo requis</h2>
+    <input type="password" id="pwd" placeholder="Code promo">
+    <button onclick="checkPassword()">Entrer</button>
+    <p id="error" style="color:red;"></p>
+  </div>
+  <div id="secret">
+    <h1>On va prendre un verre ?</h1>
+  </div>
+  <script>
+    function checkPassword() {
+      const password = document.getElementById('pwd').value;
+      if (password === 'BG15') {
+        document.getElementById('login').style.display = 'none';
+        document.getElementById('secret').style.display = 'block';
+      } else {
+        document.getElementById('error').textContent = "Code promo incorrect.";
+      }
+    }
+  </script>
+</body>
+</html>
